@@ -4,6 +4,8 @@
 const express = require('express');
 const morgan = require('morgan');
 const { sequelize, Users, Courses, } = require('./models');
+const router = require('./routes');
+
 
 // variable to enable global error logging
 const enableGlobalErrorLogging = process.env.ENABLE_GLOBAL_ERROR_LOGGING === 'true';
@@ -15,11 +17,7 @@ const app = express();
 app.use(morgan('dev'));
 
 // setup a friendly greeting for the root route
-app.get('/', (req, res) => {
-  res.json({
-    message: 'Welcome to the REST API project!',
-  });
-});
+app.use('/', router);
 
 (async ()=> {
   await sequelize.sync();
