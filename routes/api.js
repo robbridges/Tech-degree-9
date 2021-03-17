@@ -9,7 +9,16 @@ router.get('/users', asyncHandler(async (req, res) => {
 }));
 
 router.get('/courses', asyncHandler(async (req, res) => {
-  let courses = await Course.findAll();
+
+    const courses = await Course.findAll({
+        include: [
+            {
+                model: User,
+                as: 'User',
+            },
+        ],
+        
+      });
   res.json(courses);
 }));
 
